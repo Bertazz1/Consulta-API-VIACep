@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <form id="cepForm">
+        <label for="cep">Consulta CEP:</label>
+        <input type="text" id="cep" name="cep" placeholder="Digite o CEP (somente números)">
+        <button type="button" id="searchCep">Pesquisar CEP</button>
+
+        <label for="street">Pesquisa de Ruas no PR:</label>
+        <input type="text" id="street" name="street" placeholder="Digite o nome da rua">
+        <button type="button" id="searchStreet">Pesquisar Ruas</button>
+    </form>
+
+    <div id="result" class="result" style="display: none;"></div>
+    <div id="error" class="error" style="display: none;"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
