@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Consulta de CEP</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <form id="cepForm">
-        <label for="cep">Consulta CEP:</label>
-        <input type="text" id="cep" name="cep" placeholder="Digite o CEP (somente números)">
-        <button type="button" id="searchCep">Pesquisar CEP</button>
+    <div class="container">
+        <form id="formularioCEP">
+            <h1>Consulta de CEP e Ruas</h1>
+            <label for="campoCEP">Consulta CEP:</label>
+            <input type="text" id="campoCEP" name="campoCEP" placeholder="Digite o CEP (somente números)">
+            <button type="button" id="botaoPesquisarCEP">Pesquisar CEP</button>
 
-        <label for="street">Pesquisa de Ruas no PR:</label>
-        <input type="text" id="street" name="street" placeholder="Digite o nome da rua">
-        <button type="button" id="searchStreet">Pesquisar Ruas</button>
-    </form>
+            <label for="campoRua">Pesquisa de Ruas no PR:</label>
+            <input type="text" id="campoRua" name="campoRua" placeholder="Digite o nome da rua">
+            <label for="campoCidade">Cidade:</label>
+            <input type="text" id="campoCidade" name="campoCidade" placeholder="Digite o nome da cidade">
+            <button type="button" id="botaoPesquisarRua">Pesquisar Ruas</button>
+        </form>
 
-    <div id="result" class="result" style="display: none;"></div>
-    <div id="error" class="error" style="display: none;"></div>
-
+        <div id="saida">
+            <div id="resultado" class="resultado" style="display: none;"></div>
+            <div id="erro" class="erro" style="display: none;"></div>
+        </div>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>

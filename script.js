@@ -1,72 +1,65 @@
-document.getElementById('searchCep').addEventListener('click', () => {
-    const cep = document.getElementById('cep').value.trim();
-    const resultDiv = document.getElementById('result');
-    const errorDiv = document.getElementById('error');
+document.getElementById('botaoPesquisarCEP').addEventListener('click', () => {
+    const campoCEP = document.getElementById('campoCEP').value.trim();
+    const divResultado = document.getElementById('resultado');
+    const divErro = document.getElementById('erro');
 
-    if (!/^\d{8}$/.test(cep)) {
-        errorDiv.textContent = "CEP inválido. Por favor, insira um CEP com 8 números.";
-        errorDiv.style.display = "block";
-        resultDiv.style.display = "none";
+    if (!/^\d{8}$/.test(campoCEP)) {
+        divErro.textContent = "CEP inválido. Por favor, insira um CEP com 8 números.";
+        divErro.style.display = "block";
+        divResultado.style.display = "none";
         return;
     }
 
-    fetch(`https://viacep.com.br/ws/${cep}/json/`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.erro) {
+    fetch(`https://viacep.com.br/ws/${campoCEP}/json/`)
+        .then(resposta => resposta.json())
+        .then(dados => {
+            if (dados.erro) {
                 throw new Error("CEP não encontrado.");
             }
-            resultDiv.innerHTML = `<strong>Endereço:</strong> ${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
-            resultDiv.style.display = "block";
-            errorDiv.style.display = "none";
+            divResultado.innerHTML = `
+                <h3>Resultado da Pesquisa</h3>
+                <p><strong>Endereço:</strong> ${dados.logradouro}</p>
+                <p><strong>Bairro:</strong> ${dados.bairro}</p>
+                <p><strong>Cidade:</strong> ${dados.localidade}</p>
+                <p><strong>Estado:</strong> ${dados.uf}</p>`;
+            divResultado.style.display = "block";
+            divErro.style.display = "none";
         })
-        .catch(error => {
-            errorDiv.textContent = error.message;
-            errorDiv.style.display = "block";
-            resultDiv.style.display = "none";
+        .catch(erro => {
+            divErro.textContent = erro.message;
+            divErro.style.display = "block";
+            divResultado.style.display = "none";
         });
 });
 
-document.getElementById('searchStreet').addEventListener('click', () => {
-    const street = document.getElementById('street').value.trim();
-    const resultDiv = document.getElementById('result');
-    const errorDiv = document.getElementById('error');
+document.getElementById('botaoPesquisarRua').addEventListener('click', () => {
+    const campoRua = document.getElementById('campoRua').value.trim();
+    const campoCidade = document.getElementById('campoCidade').value.trim();
+    const divResultado = document.getElementById('resultado');
+    const divErro = document.getElementById('erro');
 
-    if (!street) {
-        errorDiv.textContent = "Por favor, insira o nome de uma rua.";
-        errorDiv.style.display = "block";
-        resultDiv.style.display = "none";
+    if (!campoRua || !campoCidade) {
+        divErro.textContent = "Por favor, insira o nome da rua e da cidade.";
+        divErro.style.display = "block";
+        divResultado.style.display = "none";
         return;
     }
 
-    const city = document.getElementById('city').value.trim();
-    if (!city) {
-        errorDiv.textContent = "Por favor, insira o nome de uma cidade.";
-        errorDiv.style.display = "block";
-        resultDiv.style.display = "none";
-        return;
-    }
-    fetch(`https://viacep.com.br/ws/PR/${city}/${street}/json/`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data.length) {
+    fetch(`https://viacep.com.br/ws/PR/${campoCidade}/${campoRua}/json/`)
+        .then(resposta => resposta.json())
+        .then(dados => {
+            if (!dados.length) {
                 throw new Error("Nenhuma rua encontrada.");
             }
-            resultDiv.innerHTML = `<strong>Ruas encontradas:</strong><ul>${data.map(d => `<li>${d.logradouro}, ${d.localidade} - ${d.uf}</li>`).join('')}</ul>`;
-            resultDiv.style.display = "block";
-            errorDiv.style.display = "none";
+            divResultado.innerHTML = `
+                <h3>Ruas Encontradas</h3>
+                <ul>${dados.map(dado => `<li>${dado.logradouro}, ${dado.localidade} - ${dado.uf} - CEP: ${dado.cep}</li>`).join('')}</ul>`;
+            divResultado.style.display = "block";
+            divErro.style.display = "none";
         })
-        .then(data => {
-            if (!data.length) {
-            throw new Error("Nenhuma rua encontrada.");
-            }
-            resultDiv.innerHTML = `<strong>Ruas encontradas:</strong><ul>${data.map(d => `<li>${d.logradouro}, ${d.localidade} - ${d.uf} - CEP: ${d.cep}</li>`).join('')}</ul>`;
-            resultDiv.style.display = "block";
-            errorDiv.style.display = "none";
-        })
-        .catch(error => {
-            errorDiv.textContent = error.message;
-            errorDiv.style.display = "block";
-            resultDiv.style.display = "none";
+        .catch(erro => {
+            divErro.textContent = erro.message;
+            divErro.style.display = "block";
+            divResultado.style.display = "none";
         });
 });
